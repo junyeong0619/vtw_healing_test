@@ -8,12 +8,9 @@ logging.basicConfig(level=logging.INFO)
 @vectorize(team="qa_team", auto=False)
 def concatenate_strings_with_length(s1: str, s2: str):
     print(f"🔗 Concatenating strings: '{s1}', '{s2}'")
-    # [BUG]: Intentionally introduce a TypeError by trying to add string length directly to a string
     combined = s1 + s2
     total_length = len(combined)
-    # The bug is introduced here: attempting to add an int (total_length) to a str (combined)
-    # The expected fix would be: return combined + str(total_length)
-    return combined + total_length 
+    return combined + str(total_length)
 
 if __name__ == "__main__":
     print("\n🚀 [Step 1] Registering Metadata...")
