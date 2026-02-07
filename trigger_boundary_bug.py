@@ -15,15 +15,9 @@ def calculate_discounted_price(original_price: float, discount_percentage: float
     discount_amount = original_price * (discount_percentage / 100)
     final_price = original_price - discount_amount
 
-    # [BUG]: Intentionally missing a check here.
-    # The implicit business rule is that price cannot be negative.
-    # If final_price < 0, it should be 0.
-    # To make this trigger the AutoHealer, we'll explicitly raise an error for negative prices.
     if final_price < 0:
-        # This explicit error simulates an L2-type issue (implicit rule violation)
-        # being detected and reported as an error, so the healer can pick it up.
-        raise ValueError("Calculated price cannot be negative due to excessive discount.")
-    
+        final_price = 0
+
     return final_price
 
 if __name__ == "__main__":
