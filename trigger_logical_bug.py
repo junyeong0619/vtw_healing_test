@@ -13,15 +13,10 @@ def calculate_shipping_cost(weight_kg: float, distance_km: float, is_internation
     base_cost = weight_kg * 0.5 + distance_km * 0.01
 
     if is_international:
-        base_cost += 10.0 # Add international surcharge
+        base_cost += 10.0  # Add international surcharge
 
-    final_cost = base_cost # [BUG]: Minimum cost ($5) is not applied at the very end.
-                            # So, if base_cost is very low and it's not international,
-                            # final_cost could be < 5.0.
-
-    # Simulate a validation layer that detects the logical error
-    if final_cost < 5.0 and (weight_kg > 0 or distance_km > 0 or is_international):
-        raise ValueError(f"Shipping cost {final_cost:.2f} is below minimum $5.00, which is a logical error.")
+    # Apply minimum cost rule
+    final_cost = max(base_cost, 5.0)
 
     return final_cost
 
