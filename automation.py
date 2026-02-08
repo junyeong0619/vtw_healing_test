@@ -20,15 +20,15 @@ GLOBAL_STATE = {"count": 0}
 @vectorize(auto=True)
 async def risky_function():
     """
-    3번 호출될 때까지는 에러를 뱉고, 고쳐지면 성공해야 하는 함수
+    Raises an error for the first two calls and succeeds from the third call onwards.
     """
     print(f"   ▶️ Function called! (Count: {GLOBAL_STATE['count']})")
 
-    # 시나리오: 카운트가 0이면 에러 발생
-    if GLOBAL_STATE['count'] < 1:
+    if GLOBAL_STATE['count'] < 2:
         GLOBAL_STATE['count'] += 1
         raise ValueError("💥 Boom! An error occurred!")
 
+    GLOBAL_STATE['count'] += 1
     return "✅ Success!"
 
 async def main():
