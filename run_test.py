@@ -1,11 +1,16 @@
 import sys
 import logging
-from vectorwave import initialize_database
+from vectorwave import initialize_database, vectorize
 # 설치가 잘 되었다면 아래 import가 에러 없이 되어야 합니다.
 from vectorwave.utils.scheduler import start_scheduler
 
 # 로깅 설정
 logging.basicConfig(level=logging.INFO)
+
+@vectorize(team="qa_team", auto=False)
+def buggy_adder(a, b):
+    print(f"Adding {a} + {b}")
+    return a + b
 
 def main():
     print("🧪 Testing VectorWave Installation...")
